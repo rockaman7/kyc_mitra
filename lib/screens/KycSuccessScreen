@@ -1,0 +1,69 @@
+import 'package:flutter/material.dart';
+import '../utils/tts_helper.dart';
+
+class KycSuccessScreen extends StatefulWidget {
+  const KycSuccessScreen({super.key});
+
+  @override
+  State<KycSuccessScreen> createState() => _KycSuccessScreenState();
+}
+
+class _KycSuccessScreenState extends State<KycSuccessScreen> {
+  @override
+  void initState() {
+    super.initState();
+    TTSHelper.speak("Congratulations! Your KYC is successfully completed.");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PopScope(
+      onPopInvokedWithResult: (_, __) {
+        // Prevent back navigation
+        return false; // synchronous boolean
+      },
+      child: Scaffold(
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.verified, color: Colors.green, size: 100),
+                const SizedBox(height: 20),
+                const Text(
+                  "✅ KYC Successful!",
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  "Thank you for completing your KYC.\nYou can now use all services securely.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: () {
+                    // Pop everything and go back to WelcomeScreen
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Text(
+                    "Finish",
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
